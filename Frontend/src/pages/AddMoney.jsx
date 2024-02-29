@@ -4,8 +4,9 @@ import Letter from '../components/Letter'
 import InputField from '../components/InputField'
 import Button from '../components/Button'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 const AddMoney = () => {
- 
+  const navigate = useNavigate()
   const [amount,setAmount] = useState(0)
   const [Fname,setFname] = useState("")
   const [Lname,setLname] = useState("")
@@ -35,6 +36,7 @@ const AddMoney = () => {
   }
 
   return (
+    
     <div className='flex justify-center items-center w-full h-screen'>
         <div className='bg-white w-[340px] p-4 rounded-lg border-2'  style={{  boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.25)'}}>
           <Heading title={"Add Money"}></Heading>
@@ -46,7 +48,11 @@ const AddMoney = () => {
             setAmount(e.target.value)
           }} fieldname={'Amount (Rs.)' } placeholder={'Enter Amount'}></InputField>
           <Button onPress={addAmount} buttontext={'Initiate Transfer'}></Button>
+          <button onClick={()=>{
+            navigate('/dashboard')
+        }} className='mt-3 underline'>Go back</button>
         </div>
+        
       </div>
   )
 }

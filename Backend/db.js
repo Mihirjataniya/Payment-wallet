@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const { string } = require("zod")
 
 DATABASE =  process.env.DATABASE
 
@@ -31,7 +32,25 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength: 6
-    }
+    },
+    Friends : [{
+        Friends_id : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref:  'User',
+            required: true
+        },
+        Firstname : {
+            type: String,
+            ref: 'User',
+            required: true
+        },
+        Lastname : {
+            type: String,
+            ref: 'User',
+            required: true
+        }
+    }]
+
 })
 
 const AccountSchema = new mongoose.Schema({
@@ -46,10 +65,13 @@ const AccountSchema = new mongoose.Schema({
     }
 })
 
+
+
 const User = mongoose.model('User',UserSchema)
 const Account = mongoose.model('Bank',AccountSchema)
 
 module.exports = {
     User,
-    Account
+    Account,
+    
 }

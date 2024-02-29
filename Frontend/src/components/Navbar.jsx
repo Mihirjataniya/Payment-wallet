@@ -24,14 +24,23 @@ const Navbar = () => {
     navigate('/addmoney')
   }
 
+  const addfriend = () => {
+    navigate('/addfriend')
+  }
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    navigate('/signup')
+  }
+
   return (
     <div className='flex justify-between w-full items-center p-5 border-b-2 '>
       <div className='flex gap-8'>
       <h1 className='text-2xl font-bold'>Payments wallet</h1>
             <div className='flex gap-2'>
               <Button onPress={addmoney} buttontext={"Add Money"} />
-              <Button buttontext={"Add Friends"} />
-              <Button buttontext={"Logout"} />
+              <Button onPress={addfriend} buttontext={"Add Friends"} />
+              <Button onPress={logout} buttontext={"Logout"} />
             </div>
       </div>
             
