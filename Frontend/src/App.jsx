@@ -1,10 +1,10 @@
-
 import './App.css'
 import {BrowserRouter , Routes, Route, useNavigate} from 'react-router-dom'
 import Signup from './pages/Signup'
 import Signin from './pages/Signin'
 import Dashboard from './pages/Dashboard'
 import SendMoney from './pages/SendMoney'
+import AddMoney from './pages/AddMoney'
 import PrivateRoute from './pages/PrivateRoute'
 
 function App() {
@@ -18,6 +18,7 @@ function App() {
           <Route path='/signin' element={<Signin />} />
           <Route path='/dashboard' element={<PrivateRoute  Component={Dashboard}/>} />
           <Route path='/send' element={<PrivateRoute Component={SendMoney} />} />
+          <Route path='/addmoney' element={<PrivateRoute Component={AddMoney} />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -49,7 +49,7 @@ userRouter.post('/signup',async (req, res) => {
 
     const amount = await Account.create({
         userId: user._id,
-        balance: 1 + Math.floor(Math.random()*10000)
+        balance: 0
     })
     const user_Id = user._id
     const token = jwt.sign({
@@ -98,12 +98,10 @@ userRouter.post('/signin',async (req,res)=>{
 
 userRouter.get("/SignedinUser",authMiddlewear,async(req,res)=>{
     const user_Id = req.user_Id
-    console.log(user_Id)
     try {
        const user_details = await User.findOne({
             _id : user_Id
        }) 
-       console.log(user_details)
        if (user_details){
             res.status(200).json({
                 user_details : user_details

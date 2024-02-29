@@ -5,7 +5,6 @@ const { authMiddlewear } = require("../middlewear")
 const { default: mongoose } = require("mongoose")
 
 accountRouter.get('/balance',authMiddlewear,async (req,res)=>{
- 
     
     const account = await Account.findOne({
         userId: req.user_Id
@@ -14,6 +13,37 @@ accountRouter.get('/balance',authMiddlewear,async (req,res)=>{
         balance: account.balance
     })
 })
+
+accountRouter.post('/addmoney',authMiddlewear,async(req,res)=>{
+
+    try {
+    const session = await mongoose.startSession()
+    session.startTransaction()
+    const amount = req.body.amount
+    const account = await Account.findOne({
+        userId: req.user_Id
+    }).session(session)
+
+    if(!account){
+        await session.abortTransaction()
+        return res.status(400).json({
+            msg: "Cannot add money in your account"
+        })
+    }
+
+    await Account.updateOne({userId: req.user_Id}, { $inc:{ balance: +amount} }).session(session)
+    await session.commitTransaction()
+    res.status(200).json({
+        msg: "Amount transferred"
+    })
+
+    } catch (error) {
+        return res.status(500).json({
+            msg: "Something went wrong"
+        })
+    }    
+})
+
 
 accountRouter.post('/transfer',authMiddlewear,async(req,res)=>{
     const session = await mongoose.startSession()
