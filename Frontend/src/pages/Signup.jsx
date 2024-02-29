@@ -5,7 +5,7 @@ import Bottom from '../components/Bottom'
 import Heading from '../components/Heading'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-
+import { useEffect } from 'react'
 const Signup = () => {
   
   const [Firstname,setFirstname] = useState('')

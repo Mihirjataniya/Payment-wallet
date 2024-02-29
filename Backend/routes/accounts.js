@@ -6,11 +6,10 @@ const { default: mongoose } = require("mongoose")
 
 accountRouter.get('/balance',authMiddlewear,async (req,res)=>{
  
-    console.log(req.user_Id)
+    
     const account = await Account.findOne({
         userId: req.user_Id
     })
-    console.log(account)
     res.status(200).json({
         balance: account.balance
     })

@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken")
 
 const authMiddlewear = (req,res,next) => {
-
-
 const authHeader = req.headers.authorization;
 
 if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -19,8 +17,9 @@ try {
     return res.status(403).json({});
 }
 
-console.log("Came out of middlewarre")
 };
+
+
 module.exports = {
     authMiddlewear
 }

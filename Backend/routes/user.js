@@ -72,16 +72,12 @@ userRouter.post('/signin',async (req,res)=>{
             msg: "Inputs are incorrect"
         })
     }
-    console.log(signinData.data.Email)
-    console.log(signinData.data.Password)
+    
     const user = await User.findOne({
         Email: signinData.data.Email,
         Password: signinData.data.Password
     })
-  
-    console.log(user)
-    
-     if(user){
+       if(user){
         const token = await jwt.sign({
             user_Id: user._id
         },process.env.JWT_SECRET)
@@ -100,21 +96,30 @@ userRouter.post('/signin',async (req,res)=>{
 }
 })
 
-userRouter.put("/", authMiddlewear , async (req,res)=>{
-    const userDATA = updateUser.safeParse(req.body)
-    console.log(userDATA)
-    if(!(userDATA.success)){
-        res.status(411).json({
-            msg: "User Cannot be updated"
+userRouter.get("/SignedinUser",authMiddlewear,async(req,res)=>{
+    const user_Id = req.user_Id
+    console.log(user_Id)
+    try {
+       const user_details = await User.findOne({
+            _id : user_Id
+       }) 
+       console.log(user_details)
+       if (user_details){
+            res.status(200).json({
+                user_details : user_details
+            })
+       }else{
+            res.status(401).json({
+                msg: "Something went wrong"
+         })
+}
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            msg: "Internal ERROR"
         })
     }
-    await User.updateOne({_id:req.user_Id},{ 
-        $set: req.body
-    })
-    res.json({
-        msg: "User Updated successfully"
-    })
-
 })
 
 
